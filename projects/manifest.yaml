@@ -1,0 +1,11 @@
+# 工作台项目清单。源码克隆到 projects/<name>/，全部 gitignore。
+projects:
+  - name: plweb-skill
+    url: https://github.com/NetLogo-Mobile/plweb-skill
+    ignore: true
+    notes: Skills for physics-lab web API
+
+  - name: pl-town
+    url: https://github.com/wsxiaolin/pl-town
+    ignore: true
+    notes: Interactive Three.js isometric city
