@@ -32,6 +32,14 @@ Entries discovered by the Agent during task execution should follow this format:
 ## Entries
 
 [User Instruction Summary]
+- Date: 2026-09-05
+- Context: pl-town 历史重写事故复盘——Agent 在浅克隆不完整历史上执行 filter-repo，把 187 提交截断为 4 个，推送前被分支保护拦截，用户当场叫停并撤回 force push 授权
+- Instructions:
+  - force push、历史重写（filter-repo 等）以及任何改写远程提交历史的操作：动手前必须先向用户完整说明操作方案与影响面（哪些提交会保留/消失、哈希变化、对 contributor 的影响、回滚方式），拿到用户对方案的明确确认后才能执行；用户口头授权"允许 force push"仅覆盖推送动作本身，覆盖不了整套重写方案
+  - 执行历史重写前必须先核实本地历史完整性：`git rev-list --count` 对比远程提交数，警惕 `--depth 1` 浅克隆残留的截断历史
+  - 对 contributor 有影响的所有 git 操作都要按同等标准先沟通
+
+[User Instruction Summary]
 - Date: 2026-09-03
 - Context: 初始化 monkeycode-workspace，作为后续统一维护多个项目的工作台
 - Instructions:
@@ -62,3 +70,14 @@ Entries discovered by the Agent during task execution should follow this format:
   - 压缩后必须用 PIL verify 校验 PNG 完整性
   - GitHub 报告的仓库总大小需历史重写才能缩小，方案在 `projects/pl-town/docs/repo-size-reduction.md`（LFS migrate 或 filter-repo，均需 force push，由维护者执行）
   - pl-town 构建（npm ci + typecheck + build）在本环境用 background terminal 限 memory_percent 60 / cpu_percent 200 跑通，峰值内存约 630 MiB
+
+[Project Knowledge Summary]
+- Date: 2026-09-05
+- Context: Discovered by Agent while performing pl-town 历史重写事故与恢复
+- Category: Troubleshooting & Debugging
+- Instructions:
+  - pl-town 瘦身终局：PR 125 已合并（PNG 81.7 -> 42.3 MiB，工作区与新克隆受益）；历史重写被用户叫停，main 保持 187 个提交的完整历史（HEAD a317164）
+  - pl-town main 有分支保护（protected branch hook declined），凭据 token 能 push 但无法读写保护规则 API（403），force push 会被服务端拒绝
+  - GitHub API 对 pl-town 报告的 ~243MB 是 fork 网络记账（fork 自 JamieAtGit/minicity），观察克隆体积以全新 clone 为准
+  - `--depth 1` 浅克隆 + 后续 fetch 不会自动解除 shallow 截断；`git fetch --unshallow` 报 "complete repository" 时历史才完整；pl-town 本地检出已恢复完整历史
+  - 本地 pl-town 的 260905-chore-shrink-texture-assets 分支已重置回 origin 同名分支（PR 125 已合并，可视为归档）
