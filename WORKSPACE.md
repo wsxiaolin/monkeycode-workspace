@@ -54,6 +54,7 @@
 
 - `projects/plweb-skill`（https://github.com/NetLogo-Mobile/plweb-skill）
 - `projects/pl-town`（https://github.com/wsxiaolin/pl-town）
+- `projects/physics-lab-turtle-services`（https://github.com/NetLogo-Mobile/Physics-Lab-Turtle-Services）
 
 ## 4. 项目登记
 
@@ -101,7 +102,7 @@
 - 默认分支：`master`
 - 功能分支：`YYMMDD-(feat|fix|chore|refactor)-简述`
 - 提交信息使用约定式前缀：`feat:` / `fix:` / `chore:` / `docs:`
-- 只提交工作台文件。提交前执行 `git status`，确认 `projects/plweb-skill` 和 `projects/pl-town` 未出现在暂存区
+- 只提交工作台文件。提交前执行 `git status`，确认 `projects/plweb-skill`、`projects/pl-town` 和 `projects/physics-lab-turtle-services` 未出现在暂存区
 
 ## 8. 新增项目检查清单
 

@@ -15,19 +15,20 @@ cd monkeycode-workspace
 ./scripts/install-projects.sh
 ```
 
-两个已登记项目会出现在：
+三个已登记项目会出现在：
 
 - `projects/plweb-skill`
 - `projects/pl-town`
+- `projects/physics-lab-turtle-services`
 
 确认忽略：
 
 ```bash
-git check-ignore -v projects/plweb-skill projects/pl-town
+git check-ignore -v projects/plweb-skill projects/pl-town projects/physics-lab-turtle-services
 git status
 ```
 
-`git status` 中不应出现这两个目录的源码。
+`git status` 中不应出现这三个目录的源码。
 
 ## 项目结构说明
 

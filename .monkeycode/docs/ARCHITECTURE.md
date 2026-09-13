@@ -12,15 +12,19 @@ graph TD
     SCR["scripts 克隆与更新"]
     P1["projects/plweb-skill 已忽略"]
     P2["projects/pl-town 已忽略"]
+    P3["projects/physics-lab-turtle-services 已忽略"]
     R1["github.com/NetLogo-Mobile/plweb-skill"]
     R2["github.com/wsxiaolin/pl-town"]
+    R3["github.com/NetLogo-Mobile/Physics-Lab-Turtle-Services"]
     WS --> MEM
     WS --> MAN
     WS --> SCR
     SCR --> P1
     SCR --> P2
+    SCR --> P3
     P1 --> R1
     P2 --> R2
+    P3 --> R3
 ```
 
 ## 技术栈

@@ -11,7 +11,7 @@ if [[ ! -f "$MANIFEST" ]]; then
 fi
 
 python3 - "$MANIFEST" "$DEST" <<'PY'
-import os, re, subprocess, sys
+import os, re, shutil, subprocess, sys
 
 manifest_path, dest = sys.argv[1], sys.argv[2]
 text = open(manifest_path, encoding="utf-8").read()
@@ -26,6 +26,8 @@ for name in names:
     pkg = os.path.join(path, "package.json")
     req = os.path.join(path, "requirements.txt")
     pyproject = os.path.join(path, "pyproject.toml")
+    sln = [f for f in os.listdir(path) if f.endswith(".sln")]
+    csproj = [f for f in os.listdir(path) if f.endswith(".csproj")]
     if os.path.isfile(pkg):
         print(f"npm install: {name}")
         subprocess.check_call(["npm", "install"], cwd=path)
@@ -39,6 +41,13 @@ for name in names:
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", "--break-system-packages", "-r", req]
         )
+    elif sln or csproj:
+        if shutil.which("dotnet"):
+            target = sln[0] if sln else csproj[0]
+            print(f"dotnet restore: {name} (via {target})")
+            subprocess.check_call(["dotnet", "restore", target], cwd=path)
+        else:
+            print(f"skip dotnet (not installed): {name}")
     else:
         print(f"no known install file: {name}")
 PY

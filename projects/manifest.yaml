@@ -9,3 +9,8 @@ projects:
     url: https://github.com/wsxiaolin/pl-town
     ignore: true
     notes: Interactive Three.js isometric city
+
+  - name: physics-lab-turtle-services
+    url: https://github.com/NetLogo-Mobile/Physics-Lab-Turtle-Services
+    ignore: true
+    notes: Physics Lab / NetLogo 后端 API（ASP.NET Core，含 SSO）

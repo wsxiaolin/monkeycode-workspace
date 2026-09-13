@@ -33,7 +33,7 @@ projects:
 ### install-projects.sh
 
 - 入口：仓库根目录 `./scripts/install-projects.sh`
-- 行为：在各项目目录内执行该项目自己的安装命令（如 `npm install`）
+- 行为：在各项目目录内按优先级检测并执行 `package.json`（npm install）、`pyproject.toml`、`requirements.txt`（pip install --break-system-packages）、`*.sln` / `*.csproj`（dotnet restore，未安装 dotnet 时跳过）
 - 未克隆或没有已知安装文件则跳过
 
 ## Agent 文件约定

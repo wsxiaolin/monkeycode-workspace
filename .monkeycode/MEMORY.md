@@ -81,3 +81,31 @@ Entries discovered by the Agent during task execution should follow this format:
   - GitHub API 对 pl-town 报告的 ~243MB 是 fork 网络记账（fork 自 JamieAtGit/minicity），观察克隆体积以全新 clone 为准
   - `--depth 1` 浅克隆 + 后续 fetch 不会自动解除 shallow 截断；`git fetch --unshallow` 报 "complete repository" 时历史才完整；pl-town 本地检出已恢复完整历史
   - 本地 pl-town 的 260905-chore-shrink-texture-assets 分支已重置回 origin 同名分支（PR 125 已合并，可视为归档）
+
+[Project Knowledge Summary]
+- Date: 2026-09-06
+- Context: Discovered by Agent while performing pl-town Cloudflare Pages 预览连通 Render 后端（PR 133/134）
+- Category: Operations & Deployment
+- Instructions:
+  - pl-town 部署拓扑：前端静态托管（GitHub Pages 主站 /pl-town/、Cloudflare Pages 预览 *.pl-town.pages.dev、Render Static Site），后端 Render `wss://pl-town.onrender.com`（注意连字符），WS+HTTP 均浏览器直连后端（PR 134 起 HTTP 也走 CORS 直连），浏览器到后端流量绕开 Cloudflare 的区域/访问规则
+  - Cloudflare Pages `_redirects` 官方明确不支持代理外部域名（"You cannot proxy external domains"），HTTP 代理思路在 Pages 上行不通；Render Static Site 的 Rewrite 规则可以做，但 PR 134 后已无需
+  - 前端 API base 逻辑在 `apps/web/src/core/townApi.ts`：VITE_API_BASE 优先，否则由 VITE_SERVER_URL（wss→https）推导，都未设置则同源（本地 dev 与自托管不受影响）；静态托管只需配一个 VITE_SERVER_URL 构建环境变量（Cloudflare Pages 配在控制台 Production + Preview 两个环境）
+  - 后端 Origin 白名单：同源请求（Origin 与 Host / 可信代理 X-Forwarded-Host 一致）始终放行（admin 面板无需配白名单）；`ALLOWED_ORIGINS` 支持 `*.` 单级子域通配符；`/town-api/*` 带 CORS 响应头 + OPTIONS 预检，admin 端点保持同源无 CORS
+  - 生产模式 Origin/CORS 行为的集成测试在 `apps/server/tests/integration.mjs` 末尾的 production origin matrix 段（独立 spawn 在 8793 端口），改 requestSecurity/config 后必须跑 `npm run test:server` 验证
+  - gh 会话过期时 gh auth status 报 token invalid，重新从 git credential fill 取 token 管道给 gh auth login --with-token 即可（勿回显）
+
+[User Instruction Summary]
+- Date: 2026-09-13
+- Context: 将 NetLogo-Mobile 组织下的 Physics-Lab-Turtle-Services 登记进工作台时，用户强调写操作需二次确认
+- Instructions:
+  - 对 NetLogo-Mobile 组织内任何仓库的写操作（push、创建/合并 PR、改配置、发 issue/评论等），执行前必须逐次获得用户明确二次确认，不得以"已授权某一动作"推导出其他写操作也被授权
+  - 读操作（clone、fetch、查看）不受此限制，可直接执行
+
+[Project Knowledge Summary]
+- Date: 2026-09-13
+- Context: Discovered by Agent while performing 克隆 NetLogo-Mobile/Physics-Lab-Turtle-Services 到工作台
+- Category: Environment Configuration
+- Instructions:
+  - Physics-Lab-Turtle-Services 是私有仓库，内部项目/解决方案名为 Quantum Services（Quantum Physics Services），是 Physics Lab 与 NetLogo 的后端 API（ASP.NET Core .NET 8 + MongoDB + Redis + SSO）
+  - 环境 git 默认 credential.helper 是指向 Agent 的 `/app/agent/bin/agent git-credential-helper`，无法访问私有仓库；gh 登录为 wsxiaolin 后执行 `gh auth setup-git`，会为 github.com / gist.github.com 配置 `gh auth git-credential`，私有仓库即可用 git clone，其余 host 仍走 Agent helper
+  - 工作台 install-projects.sh 已支持 `*.sln` / `*.csproj` 的 `dotnet restore`（未安装 dotnet 时跳过）
