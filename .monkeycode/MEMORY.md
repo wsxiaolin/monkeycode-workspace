@@ -109,3 +109,12 @@ Entries discovered by the Agent during task execution should follow this format:
   - Physics-Lab-Turtle-Services 是私有仓库，内部项目/解决方案名为 Quantum Services（Quantum Physics Services），是 Physics Lab 与 NetLogo 的后端 API（ASP.NET Core .NET 8 + MongoDB + Redis + SSO）
   - 环境 git 默认 credential.helper 是指向 Agent 的 `/app/agent/bin/agent git-credential-helper`，无法访问私有仓库；gh 登录为 wsxiaolin 后执行 `gh auth setup-git`，会为 github.com / gist.github.com 配置 `gh auth git-credential`，私有仓库即可用 git clone，其余 host 仍走 Agent helper
   - 工作台 install-projects.sh 已支持 `*.sln` / `*.csproj` 的 `dotnet restore`（未安装 dotnet 时跳过）
+
+[Project Knowledge Summary]
+- Date: 2026-09-14
+- Context: Discovered by Agent while performing 匿名评论隐藏职位改动（PR 19）
+- Category: Build Methods
+- Instructions:
+  - Physics-Lab-Turtle-Services 在当前环境无法完成 `dotnet build`：解决方案包含 SSO 模块，缺失该模块时整体编译不通过；用户明确表示测试跑不起来、不必本地跑
+  - 因此该仓库的改动不依赖本地编译验证，交由仓库 CI / 人工 review 把关；环境默认未安装 dotnet
+  - 仓库 GitHub 默认分支是 `main`（claude.md 里写的 `master` 指部署触发，创建分支/PR 以 `main` 为 base）
