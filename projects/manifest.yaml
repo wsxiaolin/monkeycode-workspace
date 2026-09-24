@@ -14,3 +14,8 @@ projects:
     url: https://github.com/NetLogo-Mobile/Physics-Lab-Turtle-Services
     ignore: true
     notes: Physics Lab / NetLogo 后端 API（ASP.NET Core，含 SSO）
+
+  - name: diary
+    url: https://github.com/wsxiaolin/diary
+    ignore: true
+    notes: 私人日记仓库，用作人格提示词与知识库素材

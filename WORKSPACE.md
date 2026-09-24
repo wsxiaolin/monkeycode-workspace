@@ -55,6 +55,7 @@
 - `projects/plweb-skill`（https://github.com/NetLogo-Mobile/plweb-skill）
 - `projects/pl-town`（https://github.com/wsxiaolin/pl-town）
 - `projects/physics-lab-turtle-services`（https://github.com/NetLogo-Mobile/Physics-Lab-Turtle-Services）
+- `projects/diary`（https://github.com/wsxiaolin/diary）
 
 ## 4. 项目登记
 

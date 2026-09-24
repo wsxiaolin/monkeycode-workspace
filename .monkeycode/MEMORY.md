@@ -46,7 +46,7 @@ Entries discovered by the Agent during task execution should follow this format:
   - 本仓库统一维护多个项目，但项目源码不由本仓库维护
   - 本仓库只存记忆、待办等跨项目依赖，便于统一安装与协作
   - 业务项目克隆到本地后必须 gitignore，不要提交进本仓库
-  - 当前需要忽略的检出：https://github.com/NetLogo-Mobile/plweb-skill、https://github.com/wsxiaolin/pl-town
+  - 当前需要忽略的检出：https://github.com/NetLogo-Mobile/plweb-skill、https://github.com/wsxiaolin/pl-town、https://github.com/NetLogo-Mobile/Physics-Lab-Turtle-Services、https://github.com/wsxiaolin/diary
 
 [Project Knowledge Summary]
 - Date: 2026-09-03
@@ -118,3 +118,13 @@ Entries discovered by the Agent during task execution should follow this format:
   - Physics-Lab-Turtle-Services 在当前环境无法完成 `dotnet build`：解决方案包含 SSO 模块，缺失该模块时整体编译不通过；用户明确表示测试跑不起来、不必本地跑
   - 因此该仓库的改动不依赖本地编译验证，交由仓库 CI / 人工 review 把关；环境默认未安装 dotnet
   - 仓库 GitHub 默认分支是 `main`（claude.md 里写的 `master` 指部署触发，创建分支/PR 以 `main` 为 base）
+
+[Project Knowledge Summary]
+- Date: 2026-09-24
+- Context: Discovered by Agent while performing 克隆并整理 wsxiaolin/diary 为 persona + 知识库
+- Category: Operations & Deployment
+- Instructions:
+  - `wsxiaolin/diary` 是私有仓库，凭据走 gh（`gh auth setup-git` 为 github.com 配 `gh auth git-credential`，其余 host 仍走 Agent helper）；已登记进 `projects/manifest.yaml` 并克隆到 `projects/diary/`
+  - 该仓库是个人日记本（约 35 个 md/txt，按学段分目录），作为 persona 与知识库素材，不提交进工作台
+  - 衍生交付物同时存在于两处：工作区根目录 `diary-persona/`，以及日记仓库的 `persona/`（用户要求不用 PR，直接合并 main；已 push 到 main，PR #1 已自动标记 merged，另追加 `persona/待回答-人格补充问题清单.txt`）
+  - 人格提示词按用户要求拆成两版：`persona/人格提示词-社区版.txt`（偏物实社区/管理/开发）与 `persona/人格提示词-现实版.txt`（面对现实朋友，篇幅更短、少提社区）；知识库为 `persona/知识库/01-11*.txt`；`persona/待回答-人格补充问题清单.txt` 为 A-P 共 160+ 条待本人作答的补全问题
