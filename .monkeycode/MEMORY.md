@@ -128,3 +128,11 @@ Entries discovered by the Agent during task execution should follow this format:
   - 该仓库是个人日记本（约 35 个 md/txt，按学段分目录），作为 persona 与知识库素材，不提交进工作台
   - 衍生交付物同时存在于两处：工作区根目录 `diary-persona/`，以及日记仓库的 `persona/`（用户要求不用 PR，直接合并 main；已 push 到 main，PR #1 已自动标记 merged，另追加 `persona/待回答-人格补充问题清单.txt`）
   - 人格提示词按用户要求拆成两版：`persona/人格提示词-社区版.txt`（偏物实社区/管理/开发）与 `persona/人格提示词-现实版.txt`（面对现实朋友，篇幅更短、少提社区）；知识库为 `persona/知识库/01-11*.txt`；`persona/待回答-人格补充问题清单.txt` 为 A-P 共 160+ 条待本人作答的补全问题
+
+[Project Knowledge Summary]
+- Date: 2026-09-25
+- Context: Discovered by Agent while performing 三仓库物实 OAuth 登录联调的提交与推送
+- Category: Environment Configuration
+- Instructions:
+  - 工作台各项目仓库默认没有全局 git user identity；`pl-town` 自带 `--local` identity（wsxiaolin / monkeycode-ai@chaitin.com），而 `plweb2` 与 `Physics-Lab-Turtle-Services` 未配置，需先 `git config --local user.name/user.email` 才能 commit
+  - 三仓库联调的产物：服务端 PR 仅白名单（`AuthorizeForum` 回调 + `CheckOrigin`），plweb2 提供 `/oauth/authorize` 授权页，pl-town 走 `/town-api/pl/oauth/start` 与固定回调 `/town-api/auth/oauth2_basic/callback`
