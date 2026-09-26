@@ -136,3 +136,11 @@ Entries discovered by the Agent during task execution should follow this format:
 - Instructions:
   - 工作台各项目仓库默认没有全局 git user identity；`pl-town` 自带 `--local` identity（wsxiaolin / monkeycode-ai@chaitin.com），而 `plweb2` 与 `Physics-Lab-Turtle-Services` 未配置，需先 `git config --local user.name/user.email` 才能 commit
   - 三仓库联调的产物：服务端 PR 仅白名单（`AuthorizeForum` 回调 + `CheckOrigin`），plweb2 提供 `/oauth/authorize` 授权页，pl-town 走 `/town-api/pl/oauth/start` 与固定回调 `/town-api/auth/oauth2_basic/callback`
+
+[Project Knowledge Summary]
+- Date: 2026-09-26
+- Context: Discovered by Agent while performing 继续 260925-fix-city-construction-zone 分支的收尾提交
+- Category: Workflow & Collaboration
+- Instructions:
+  - `projects/pl-town-construction/` 是 pl-town 的第二个本地检出（同一 remote wsxiaolin/pl-town），未登记进 manifest.yaml；施工区域/城市场景类任务在该目录进行，注意与 `projects/pl-town/` 区分
+  - 工作台可能存在多个会话并行写 MEMORY.md：push 被拒时先 `git pull --rebase`，冲突时两边条目都保留（按日期排序追加），rebase 后继续推送
