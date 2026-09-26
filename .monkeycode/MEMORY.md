@@ -136,6 +136,15 @@ Entries discovered by the Agent during task execution should follow this format:
 - Instructions:
   - 工作台各项目仓库默认没有全局 git user identity；`pl-town` 自带 `--local` identity（wsxiaolin / monkeycode-ai@chaitin.com），而 `plweb2` 与 `Physics-Lab-Turtle-Services` 未配置，需先 `git config --local user.name/user.email` 才能 commit
   - 三仓库联调的产物：服务端 PR 仅白名单（`AuthorizeForum` 回调 + `CheckOrigin`），plweb2 提供 `/oauth/authorize` 授权页，pl-town 走 `/town-api/pl/oauth/start` 与固定回调 `/town-api/auth/oauth2_basic/callback`
+  - 默认 gh token 只有 `gist,read:org,repo`，推 `.github/workflows/` 会被拒（ refusing ... workflow scope）；解法：`GH_CONFIG_DIR=<隔离目录> gh auth login --web --scopes repo,workflow` 走 device code 登录拿新凭据，不影响默认登录，推 PR 用 `GH_CONFIG_DIR=<目录> gh pr create`
+
+[Project Knowledge Summary]
+- Date: 2026-09-26
+- Context: Discovered by Agent while performing plweb-cyberlife 模型回退名单修复与人设强化（PR #1）
+- Category: Workflow & Collaboration
+- Instructions:
+  - `projects/plweb-cyberlife/`（wsxiaolin/plweb-cyberlife）是赛博生命项目：谢千树/落星如雨，AGENTS.md 为运行宪法，`prompts/wakeup.md` 是唤醒提示词，CI 用 opencode run 唤起，模型回退名单在 wakeup.yml/weekly.yml 的 `OPENCODE_MODEL_FALLBACKS`（逗号分隔）；本地身份用小临
+  - 该类项目人设/提示词改动集中在 AGENTS.md、prompts/wakeup.md、persona/、config/life.json
 
 [Project Knowledge Summary]
 - Date: 2026-09-26
