@@ -144,5 +144,6 @@ Entries discovered by the Agent during task execution should follow this format:
   - 今后 git 提交/push 必须使用用户本人的 GitHub 账号身份，提交作者不得落到 Agent 自己名下
   - 用户的 GitHub 身份：login `wsxiaolin`，数字 ID `155876693`，提交作者名 `小临`，提交邮箱 `155876693+wsxiaolin@users.noreply.github.com`；禁止使用 `monkeycode-ai` / `monkeycode-ai@chaitin.com`
   - 若本环境 gh 未登录用户账号（仅有过期的 monkeycode-ai[bot]），需要先请用户登录，登录后再执行 `gh auth setup-git` 让 git 走用户凭据
+  - 提交后必须核验作者与消息：`git log -1 --format='%an %cn'` + `%B | grep -ci monkey`；本环境曾在提交里自动注入 Co-authored-by trailer，用 `git -c core.hooksPath= commit` 可拦住，出现残留时 amend 后再推
   - 所有改动都必须提交并同步到远程（分支 + PR），不留本地未同步的改动
   - pl-town 云备份工作流不增加定时触发，只保留 `main` push 和手动触发
