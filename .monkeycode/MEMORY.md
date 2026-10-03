@@ -111,13 +111,30 @@ Entries discovered by the Agent during task execution should follow this format:
   - 工作台 install-projects.sh 已支持 `*.sln` / `*.csproj` 的 `dotnet restore`（未安装 dotnet 时跳过）
 
 [Project Knowledge Summary]
-- Date: 2026-09-14
-- Context: Discovered by Agent while performing 匿名评论隐藏职位改动（PR 19）
+- Date: 2026-10-03 (corrects the 2026-09-14 entry)
+- Context: Discovered by Agent while performing 验证 PR #21 本地开发栈能否在本环境跑通
 - Category: Build Methods
 - Instructions:
-  - Physics-Lab-Turtle-Services 在当前环境无法完成 `dotnet build`：解决方案包含 SSO 模块，缺失该模块时整体编译不通过；用户明确表示测试跑不起来、不必本地跑
-  - 因此该仓库的改动不依赖本地编译验证，交由仓库 CI / 人工 review 把关；环境默认未安装 dotnet
+  - 【2026-10-03 更正】装上 .NET SDK 8 后该仓库 `dotnet build` 实测通过（PR #21 分支 0 错误，峰值内存 910MiB / 2.5min；PR 只加 appsettings 与 dev 脚本，main 分支同样可编译）。旧结论"因 SSO 缺失编译不过"不成立：`Quantum SSO/` 是客户端项目、随解决方案一起编译，缺的是运行期 SSO 服务端（PR #21 用 mock 补）
+  - 本地工具链已就位：dotnet 8.0.425（~/.dotnet）、mongod 8.0.12（~/mongo/bin，tarball）、redis-server 7.0.15（apt）、pymongo 4.18（pip --break-system-packages）
   - 仓库 GitHub 默认分支是 `main`（claude.md 里写的 `master` 指部署触发，创建分支/PR 以 `main` 为 base）
+
+[Project Knowledge Summary]
+- Date: 2026-10-03
+- Context: Discovered by Agent while performing 验证 PR #21（feat/local-dev-stack）mock 本地开发栈
+- Category: Operations & Deployment
+- Instructions:
+  - PR #21 mock 栈在本环境实测跑通：mongod 27017 + redis 6379 + mock SSO 13000/13001 + API 9348；三条认证流（匿名/authCode/邮箱密码）返回完整 StartupPackage，verify-all 13 项 12 过（CrossService 用例硬编码作者库用户 ObjectId，属测试数据耦合）
+  - 启动方式：`bash dev/run-dev.sh`（首次建议 SKIP_SYNC=1）；配置同步用 `SYNC_GITHUB_TOKEN=$(gh auth token) bash dev/sync-config.sh --api-url http://127.0.0.1:9348`（成功判据 Status 200：12 库/61 消息/47 价格/30 活动/7 充值/47 标签/1 促销/0 错误）
+  - run-dev.sh 已修的本地 bug（未提交）：`[ -x "$MONGOD"/"$REDIS_BIN" ]` 对 command -v 的裸名做 -x 测试按相对路径解析会误判；apt 装的 redis 必中此 bug
+  - sync-config.sh 已知问题：正则取 hosts.yml 第一个 oauth_token，本机排前的是已过期 monkeycode-ai[bot] token，导致 tarball 下载 401→502；正确做法是用 `gh auth token`
+  - run-dev.sh 的 sync 步骤自起临时 API 占 9348，kill/pkill 后主 API 立即启动有端口竞态（address already in use）；规避：SKIP_SYNC=1 启动后再用 --api-url 补同步
+
+[User Instruction Summary]
+- Date: 2026-10-03
+- Context: gh pr checkout 21 在 /workspace 根目录误将工作台仓库切到 PR 分支，工作树被 Physics-Lab 内容覆盖（reflog 证实，已用 git switch 260926-chore-record-ci-preference 完整恢复）
+- Instructions:
+  - gh pr checkout / gh repo clone 等会改变当前仓库工作树的命令，必须在目标项目目录内执行；在工作台根目录只做只读查询
 
 [User Instruction Summary]
 - Date: 2026-09-26
