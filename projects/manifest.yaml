@@ -5,6 +5,11 @@ projects:
     ignore: true
     notes: 赛博生命"谢千树"（落星如雨）——物实社区 AI 人格，CI 唤醒 + 记忆仓库
 
+  - name: plweb-cyberlife-zengyimo
+    url: https://github.com/wsxiaolin/plweb-cyberlife-zengyimo
+    ignore: true
+    notes: 赛博生命"曾以沫"（焦距有点长）——同源物实社区 AI 人格，第二个实例
+
   - name: plap
     url: https://github.com/wsxiaolin/plap
     ignore: true

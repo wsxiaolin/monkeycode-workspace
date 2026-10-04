@@ -145,6 +145,8 @@ Entries discovered by the Agent during task execution should follow this format:
 - Category: Operations & Deployment
 - Instructions:
   - 工作台新登记 `projects/plweb-cyberlife/`（赛博生命，CI 唤醒正常：成功唤醒 + 作息门卫深夜取消属预期）与 `projects/plap/`（物实 API 封装，npm 包名 plweb）
+  - `projects/plweb-cyberlife-zengyimo/`（赛博生命"曾以沫"，谢千树的同源姊妹实例）2026-10-04 登记并克隆；本地 git 身份沿用仓库历史作者：焦距有点长 <zengyimo@users.noreply.github.com>
+  - zengyimo 的门卫边缘 case：门卫判定"不该醒"后 `gh run cancel` 自身遇 GitHub API 瞬时 5xx 会以 failure 收场（2026-10-03 一次），判定正确、后续运行正常，属良性噪音
   - plweb-cyberlife 本地 git 身份沿用仓库历史作者：落星如雨 <xiegushi2022@outlook.com>；写 PR 走 wsxiaolin 个人仓库，无 NetLogo-Mobile 二次确认约束
 
 [Project Knowledge Summary]
