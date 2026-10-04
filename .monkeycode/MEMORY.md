@@ -130,6 +130,31 @@ Entries discovered by the Agent during task execution should follow this format:
   - 人格提示词按用户要求拆成两版：`persona/人格提示词-社区版.txt`（偏物实社区/管理/开发）与 `persona/人格提示词-现实版.txt`（面对现实朋友，篇幅更短、少提社区）；知识库为 `persona/知识库/01-11*.txt`；`persona/待回答-人格补充问题清单.txt` 为 A-P 共 160+ 条待本人作答的补全问题
 
 [Project Knowledge Summary]
+- Date: 2026-10-03
+- Context: Discovered by Agent while performing plweb-cyberlife 状态巡检与回复通知/技能注册修复（PR #5）
+- Category: Troubleshooting & Debugging
+- Instructions:
+  - 物实评论回复的服务端真实语义（源码核实 Physics-Lab-Turtle-Services CommentLogic.PostCommentAsync）：Comment-Replied（有人回复你）站内信需要"正文 @ 提及 + 请求体 ReplyID=被回复人用户 ID"两条件同时成立；ReplyID 传评论 ID 无效（服务端按用户 ID 比对）；plap 的 send.js/bot 源码与此一致，可作 API 语义权威参考
+  - plweb-cyberlife 的 `opencode debug skill` 可无模型列出技能发现结果，是验证技能注册的零成本手段；本机 opencode 1.18.34
+  - opencode 技能发现路径仅限 `.opencode/skills/`、`.claude/skills/`、`.agents/skills/`（项目级）与 `~/.config/opencode/skills/` 等（全局）；目录 symlink 指向技能源目录可被正常发现（已实测），plweb-cyberlife 用 `.agents/skills/<name> -> ../../skills/<name>` 方案单源注册
+
+[Project Knowledge Summary]
+- Date: 2026-10-03
+- Context: Discovered by Agent while performing plweb-cyberlife/plap 克隆登记与巡检
+- Category: Operations & Deployment
+- Instructions:
+  - 工作台新登记 `projects/plweb-cyberlife/`（赛博生命，CI 唤醒正常：成功唤醒 + 作息门卫深夜取消属预期）与 `projects/plap/`（物实 API 封装，npm 包名 plweb）
+  - plweb-cyberlife 本地 git 身份沿用仓库历史作者：落星如雨 <xiegushi2022@outlook.com>；写 PR 走 wsxiaolin 个人仓库，无 NetLogo-Mobile 二次确认约束
+
+[Project Knowledge Summary]
+- Date: 2026-10-03
+- Context: Discovered by Agent while performing 新环境初始化（gh 登录 + 克隆 + 装依赖）
+- Category: Environment Configuration
+- Instructions:
+  - git credential helper 对 github.com 会返回 500（2026-09-03 记录的"从 helper 取 token 赋给 GH_TOKEN"路径已不可用）；当前可用流程：后台终端跑 `gh auth login --hostname github.com --git-protocol https --web`，把 one-time code 给用户在 https://github.com/login/device 授权（默认 scopes: gist, read:org, repo），成功后 `gh auth setup-git`
+  - manifest 4 仓库中 plweb-skill 为纯 SKILL.md/docs（无安装文件）、diary 为纯 markdown，install-projects.sh 会自动跳过；physics-lab-turtle-services 环境无 dotnet，跳过 restore；只有 pl-town 需要 npm install（180 包，峰值内存约 288 MiB）
+
+[Project Knowledge Summary]
 - Date: 2026-09-25
 - Context: Discovered by Agent while performing 三仓库物实 OAuth 登录联调的提交与推送
 - Category: Environment Configuration

@@ -1,5 +1,15 @@
 # 工作台项目清单。源码克隆到 projects/<name>/，全部 gitignore。
 projects:
+  - name: plweb-cyberlife
+    url: https://github.com/wsxiaolin/plweb-cyberlife
+    ignore: true
+    notes: 赛博生命"谢千树"（落星如雨）——物实社区 AI 人格，CI 唤醒 + 记忆仓库
+
+  - name: plap
+    url: https://github.com/wsxiaolin/plap
+    ignore: true
+    notes: 物理实验室网络 API 封装（npm plweb），评论 ReplyID 等 API 语义的权威参考之一
+
   - name: plweb-skill
     url: https://github.com/NetLogo-Mobile/plweb-skill
     ignore: true
