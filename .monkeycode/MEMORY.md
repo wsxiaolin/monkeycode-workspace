@@ -135,6 +135,7 @@ Entries discovered by the Agent during task execution should follow this format:
 - Category: Troubleshooting & Debugging
 - Instructions:
   - 物实评论回复的服务端真实语义（源码核实 Physics-Lab-Turtle-Services CommentLogic.PostCommentAsync）：Comment-Replied（有人回复你）站内信需要"正文 @ 提及 + 请求体 ReplyID=被回复人用户 ID"两条件同时成立；ReplyID 传评论 ID 无效（服务端按用户 ID 比对）；plap 的 send.js/bot 源码与此一致，可作 API 语义权威参考
+  - plweb-cyberlife 唤醒槽位的 GitHub cron 可靠性实测（2026-10-03/04 两天）：00:30Z/02:30Z（北京 08:30/10:30）连续被调度器整体丢弃，04:30Z（北京 12:30）迟到 60~95 分钟，08:30Z 及以后全部准点；门卫 ±100 分钟容差只能兜迟到，兜不了不触发——上学日早课唤醒共用 "30 0" cron，开学后上午这醒大概率持续丢失，调 cron 或加兜底槽属运营决策
   - plweb-cyberlife 的 `opencode debug skill` 可无模型列出技能发现结果，是验证技能注册的零成本手段；本机 opencode 1.18.34
   - opencode 技能发现路径仅限 `.opencode/skills/`、`.claude/skills/`、`.agents/skills/`（项目级）与 `~/.config/opencode/skills/` 等（全局）；目录 symlink 指向技能源目录可被正常发现（已实测），plweb-cyberlife 用 `.agents/skills/<name> -> ../../skills/<name>` 方案单源注册
 
