@@ -181,3 +181,10 @@ Entries discovered by the Agent during task execution should follow this format:
 - Instructions:
   - `projects/pl-town-construction/` 是 pl-town 的第二个本地检出（同一 remote wsxiaolin/pl-town），未登记进 manifest.yaml；施工区域/城市场景类任务在该目录进行，注意与 `projects/pl-town/` 区分
   - 工作台可能存在多个会话并行写 MEMORY.md：push 被拒时先 `git pull --rebase`，冲突时两边条目都保留（按日期排序追加），rebase 后继续推送
+
+[User Instruction Summary]
+- Date: 2026-10-10
+- Context: 处理 pl-town PR #237（春节烟花主题）与 main 的合并冲突
+- Instructions:
+  - 处理 PR 合并冲突时，除解决冲突外，还要主动：检查分支可合并性（mergeable / mergeStateStatus）、跟进 AI 审查、盯 CI 直到全绿、并判断是否具备合并条件（不代为合并，交给用户决定）
+  - 验收标准：`gh pr checks` 全部通过且 `mergeStateStatus: CLEAN` + `mergeable: MERGEABLE`
